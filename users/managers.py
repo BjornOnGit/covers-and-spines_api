@@ -1,0 +1,49 @@
+import logging
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import BaseUserManager
+from django.utils import timezone
+from django.utils.crypto import get_random_string
+from datetime import timedelta
+from django.apps import apps
+
+logger = logging.getLogger('password_reset')
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not username:
+            raise ValueError('The Username field must be set')
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    def create_password_reset_token(self, user):
+        PasswordReset = apps.get_model('users', 'PasswordReset')
+        token = get_random_string(length=32)
+        expiration_time = timezone.now() + timedelta(minutes=30)
+        PasswordReset.objects.create(user=user, token=token, expiration=expiration_time)
+        user.save()
+        logger.info("Password reset token generated for user %s", user.email)
+        return token
+    
+    def reset_password(self, user, token, new_password):
+        """
+        Reset the user's password if the provided token is correct.
+        """
+        PasswordReset = apps.get_model('users', 'PasswordReset')
+        try:
+            password_reset = PasswordReset.objects.get(user=user, token=token)
+            if password_reset and not password_reset.is_expired():
+                user.set_password(new_password)
+                user.save()
+                password_reset.delete()  # delete the token after it's used
+                logger.info("Password reset for user %s", user.email)
+                return True
+        except ObjectDoesNotExist:
+            logger.warning("Password reset failed for user %s", user.email)
+
+        logger.warning("Password reset failed for user %s", user.email)
+        return False

@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "spinesandcovers",
+            "username": "bjorn",
+            "name": "spinesandcovers_postgre"
+        }
+    ]
+}
