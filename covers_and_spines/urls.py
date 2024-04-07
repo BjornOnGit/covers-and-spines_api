@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,13 @@ urlpatterns = [
     path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/v1/auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path('api/v1/auth/', include('users.urls')),
+    path('api/v1/books/', include('books.urls')),
+    path('api/v1/reviews/', include('reviews.urls')),
+    path('api/v1/orders/', include('orders.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
