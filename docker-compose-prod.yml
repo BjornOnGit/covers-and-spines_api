@@ -1,0 +1,26 @@
+version: '3.10'
+
+services:
+  web:
+    build: .
+    command: gunicorn covers_and_spines.wsgi -b 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/covers-and-spines_api
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

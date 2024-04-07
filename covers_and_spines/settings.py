@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from environs import Env
 import socket
-
+import dj_database_url
 env = Env()
 env.read_env()
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+db_from_env = dj_database_url.config(conn_max_age=500)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -216,3 +217,4 @@ LOGGING = {
 }
 
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+DATABASES['default'].update(db_from_env)
