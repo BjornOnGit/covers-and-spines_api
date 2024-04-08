@@ -7,4 +7,4 @@ release:
     - python manage.py migrate
     - python manage.py collectstatic --noinput
 run:
-  web: gunicorn overs_and_spines.wsgi
+  web: gunicorn covers_and_spines.wsgi
