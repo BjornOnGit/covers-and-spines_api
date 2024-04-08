@@ -114,6 +114,7 @@ WSGI_APPLICATION = 'covers_and_spines.wsgi.application'
 
 
 DATABASES = {
+    'default': env.dj_db_url('DATABASE_URL')
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': env.str('DB_NAME'),
