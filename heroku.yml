@@ -1,6 +1,6 @@
-addons:
-  - plan: heroku-postgresql:essential-2
 build:
+  addons:
+    - plan: heroku-postgresql:essential-2
   docker:
     web: Dockerfile
 release:
