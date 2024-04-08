@@ -83,6 +83,10 @@ CORS_ALLOWED_ORIGINS = [
     "https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com",
+]
+
 ROOT_URLCONF = 'covers_and_spines.urls'
 
 REST_FRAMEWORK ={
