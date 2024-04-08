@@ -79,6 +79,10 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 604800
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
+CORS_ALLOWED_ORIGINS = [
+    "https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com",
+]
+
 ROOT_URLCONF = 'covers_and_spines.urls'
 
 REST_FRAMEWORK ={
