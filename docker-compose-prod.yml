@@ -21,6 +21,9 @@ services:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
+      GOOGLE_OAUTH2_KEY: ${GOOGLE_OAUTH2_KEY}
+      GOOGLE_OAUTH2_SECRET: ${GOOGLE_OAUTH2_SECRET}
+      PAYSTACK_TEST_API_KEY: ${PAYSTACK_TEST_API_KEY}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
