@@ -20,13 +20,15 @@ class SignUpView(generics.GenericAPIView):
         serializer.save()
         user_data = serializer.data
 
+        self.send_mail_with_template(user_data['email'], 'Sign Up')
+
         return Response(user_data, status=status.HTTP_201_CREATED)
     
     def send_mail_with_template(to_email, template_name):
         return requests.post(
         "https://api.mailgun.net/v3/your-domain.com/messages",
-        auth=("api", "your-mailgun-api-key"),
-        data={"from": "Excited User <mailgun@your-domain.com>",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"from": "Mailgun Sandbox https://api.mailgun.net/v3/sandboxd0988133d21a41338404e299a217a190.mailgun.org/messages",
               "to": [to_email],
               "template": template_name,
               "t:text": "yes"})
@@ -52,14 +54,16 @@ class AuthorVerificationView(generics.GenericAPIView):
         serializer = self.serializer_class(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            self.send_mail_with_template(user['email'], 'Author Verification')
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
     def send_mail_with_template(to_email, template_name):
         return requests.post(
         "https://api.mailgun.net/v3/your-domain.com/messages",
-        auth=("api", "your-mailgun-api-key"),
-        data={"from": "Excited User <mailgun@your-domain.com>",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"from": "Mailgun Sandbox https://api.mailgun.net/v3/sandboxd0988133d21a41338404e299a217a190.mailgun.org/messages",
               "to": [to_email],
               "template": template_name,
               "t:text": "yes"})
@@ -75,14 +79,15 @@ class PasswordRequestView(generics.GenericAPIView):
         user = CustomUser.objects.filter(email=email).first()
         if user:
             token = CustomUser.objects.create_password_reset_token(user)
+            self.send_mail_with_template(email, 'Password Reset Request')
             return Response({'token': token}, status=status.HTTP_200_OK)
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
     
     def send_mail_with_template(to_email, template_name):
         return requests.post(
         "https://api.mailgun.net/v3/your-domain.com/messages",
-        auth=("api", "your-mailgun-api-key"),
-        data={"from": "Excited User <mailgun@your-domain.com>",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"from": "Mailgun Sandbox https://api.mailgun.net/v3/sandboxd0988133d21a41338404e299a217a190.mailgun.org/messages",
               "to": [to_email],
               "template": template_name,
               "t:text": "yes"})
@@ -105,14 +110,15 @@ class PasswordResetView(generics.GenericAPIView):
             user = password_reset.user
             CustomUser = apps.get_model('users', 'CustomUser')
             if CustomUser.objects.reset_password(user, token, new_password):
+                self.send_mail_with_template(user['email'], 'Password reset confirmation')
                 return Response({'message': 'Password reset successful'}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
     
     def send_mail_with_template(to_email, template_name):
         return requests.post(
         "https://api.mailgun.net/v3/your-domain.com/messages",
-        auth=("api", "your-mailgun-api-key"),
-        data={"from": "Excited User <mailgun@your-domain.com>",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"from": "Mailgun Sandbox https://api.mailgun.net/v3/sandboxd0988133d21a41338404e299a217a190.mailgun.org/messages",
               "to": [to_email],
               "template": template_name,
               "t:text": "yes"})

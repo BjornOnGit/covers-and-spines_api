@@ -228,3 +228,4 @@ LOGGING = {
 
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 DATABASES['default'].update(db_from_env)
+MAILGUN_API_KEY = env.str('MAILGUN_API_KEY')
