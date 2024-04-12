@@ -58,3 +58,7 @@ The API is integrated with PayStack for payment processing. To use the payment p
 
 To contribute to the project, fork the repository and create a pull request. Make sure to provide a detailed description of the changes you made and the reason for the changes. All contributions are welcome. I encourage frontend developers who have built online bookstore projects to use the API and provide feedback on how it can be improved.
 PLEASE DO NOT PUSH TO THE MAIN BRANCH. Create a new branch and create a new pull request from that branch to the main.
+
+## License
+
+This project is licensed under the MIT license.
