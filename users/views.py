@@ -130,7 +130,7 @@ class GoogleAuthRedirect(generics.GenericAPIView):
     permission_classes = [AllowAny]
     
     def get(self, request):
-        redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri=http://127.0.0.1:8000/api/v1/auth/google-redirect"
+        redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri=https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com/api/v1/auth/google-redirect"
         return redirect(redirect_url)
 
 google_auth_redirect = GoogleAuthRedirect.as_view()
@@ -149,7 +149,7 @@ class GoogleRedirectURIView(generics.GenericAPIView):
                 'code': code,
                 'client_id': settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
                 'client_secret': settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
-                'redirect_uri': 'http://127.0.0.1:8000/api/v1/auth/google-redirect',  # Must match the callback URL configured in your Google API credentials
+                'redirect_uri': 'https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com/api/v1/auth/google-redirect',  # Must match the callback URL configured in your Google API credentials
                 'grant_type': 'authorization_code',
             }
             

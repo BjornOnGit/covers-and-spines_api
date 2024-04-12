@@ -44,7 +44,11 @@ To access the API, navigate to `http://localhost:8000/` in your browser.
 
 ## Usage
 
-To use the API, all the endpoints are available on the API documentation page. You can access the API documentation by navigating to `https://documenter.getpostman.com/view/27448500/2sA3BgAais` in your browser. The API documentation provides a list of all the endpoints available and the required parameters for each endpoint.
+To use the API, all the endpoints are available on the [API documentation page](https://documenter.getpostman.com/view/27448500/2sA3BgAais). The API documentation provides a list of all the endpoints available and the required parameters for each endpoint.
+
+To use the payment processing feature, you will need to create a PayStack account and provide the API keys in the `.env` file.
+
+To install the required packages, run the following command:
 
 ## Integrations
 
