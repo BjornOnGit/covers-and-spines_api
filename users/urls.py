@@ -7,5 +7,7 @@ urlpatterns = [
     path('password_request/', views.password_request, name='password-request'),
     path('password_reset/', views.password_reset, name='password-reset'),
     path('google-signup/', views.google_auth_redirect, name='google_signup'),
-    path('google-redirect/', views.google_redirect, name='google_redirect')
+    path('google-redirect/', views.google_redirect, name='google_redirect'),
+    path('users/', views.all_users, name='all_users'),
+    path('user_detail/<int:pk>/', views.user_detail, name='user-detail')
 ]

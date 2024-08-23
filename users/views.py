@@ -179,4 +179,25 @@ class GoogleRedirectURIView(generics.GenericAPIView):
 
 google_redirect = GoogleRedirectURIView.as_view()
 
+class UserListView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        users = self.get_queryset()
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data)
+
+all_users = UserListView.as_view()
+
+class UserDetailView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+user_detail = UserDetailView.as_view()
 # Create your views here.

@@ -26,4 +26,13 @@ class PasswordReset(models.Model):
     
     def is_expired(self):
         return self.expiration < timezone.now()
-# Create your models here.
+
+
+# class CustomAdminLog(models.Model):
+#     action_time = models.DateTimeField(auto_now_add=True)
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     content_type = models.ForeignKey('contenttypes.ContentType', on_delete=models.CASCADE)
+#     object_id = models.TextField(blank=True, null=True)
+#     object_repr = models.CharField(max_length=200)
+#     action_flag = models.PositiveSmallIntegerField()
+#     change_message = models.TextField(blank=True, null=True)
