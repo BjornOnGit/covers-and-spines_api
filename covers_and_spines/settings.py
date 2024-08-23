@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from environs import Env
 import socket
-
+import dj_database_url
 env = Env()
 env.read_env()
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+db_from_env = dj_database_url.config(conn_max_age=500)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 ENVIRONMENT = env.str('ENVIRONMENT', default='production')
 
@@ -78,6 +79,14 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 604800
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
+CORS_ALLOWED_ORIGINS = [
+    "https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://glacial-hamlet-55491-f91a60885b5e.herokuapp.com",
+]
+
 ROOT_URLCONF = 'covers_and_spines.urls'
 
 REST_FRAMEWORK ={
@@ -111,16 +120,18 @@ WSGI_APPLICATION = 'covers_and_spines.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.str('DB_NAME'),
-        'USER': env.str('DB_USER'),
-        'PASSWORD': env.str('DB_PASSWORD'),
-        'HOST': env.str('DB_HOST'),
-        'PORT': env.str('DB_PORT'),
-    }
-}
+    'default': env.dj_db_url('DATABASE_URL')
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env.str('DB_NAME'),
+#         'USER': env.str('DB_USER'),
+#         'PASSWORD': env.str('DB_PASSWORD'),
+#         'HOST': env.str('DB_HOST'),
+#         'PORT': env.str('DB_PORT'),
+#     }
+ }
 
 
 # Password validation
@@ -216,3 +227,5 @@ LOGGING = {
 }
 
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+DATABASES['default'].update(db_from_env)
+MAILGUN_API_KEY = env.str('MAILGUN_API_KEY')

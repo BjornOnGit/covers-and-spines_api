@@ -1,13 +1,10 @@
-setup:
-  addons:
-    - plan: heroku-postgresql
-  build:
-    docker:
-      web: Dockerfile
-  release:
-    image: web
-    command:
-      - python manage.py migrate
-      - python manage.py collectstatic --noinput
-  run:
-    web: gunicorn overs_and_spines.wsgi
+build:
+  docker:
+    web: Dockerfile
+release:
+  image: web
+  command:
+    - python manage.py migrate
+    - python manage.py collectstatic --noinput
+run:
+  web: gunicorn covers_and_spines.wsgi
